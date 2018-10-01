@@ -45,6 +45,13 @@ public class CoreConfig {
                 .create()
                 .build();
     }
+
+    @Primary
+    @Bean(name = "coredbEntityManager")
+    public LocalContainerEntityManagerFactoryBean coredbEntityManagerFactory() {
+        return coredbEntityManagerFactory();
+    }
+
     @Primary
     @Bean(name = "coredbEntityManager")
     public LocalContainerEntityManagerFactoryBean coredbEntityManagerFactory(EntityManagerFactoryBuilder builder) {
