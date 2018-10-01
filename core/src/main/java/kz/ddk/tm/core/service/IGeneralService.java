@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface IGeneralService {
     List<Course> getAllCourse();
+    List<Lesson> getLessonsByGroupId(Integer groupId);
+    List<Lesson> getLessonsByRoomId(Integer roomId);
 }

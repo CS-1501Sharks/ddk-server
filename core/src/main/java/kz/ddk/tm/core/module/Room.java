@@ -7,7 +7,7 @@ import java.util.Objects;
 @Table(name = "room", schema = "ddk_core", catalog = "")
 public class Room {
     private int id;
-    private Integer name;
+    private String name;
     private Integer floor;
     private String number;
 
@@ -24,11 +24,11 @@ public class Room {
 
     @Basic
     @Column(name = "name")
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Integer name) {
+    public void setName(String name) {
         this.name = name;
     }
 
