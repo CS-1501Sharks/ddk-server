@@ -5,11 +5,14 @@ import kz.ddk.tm.core.module.Course;
 import kz.ddk.tm.core.module.Lesson;
 import kz.ddk.tm.core.service.IGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,12 @@ public class GeneralController {
     @GetMapping("/lesson/bygroup/{id}")
     List<Lesson> getAllByGroupId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByGroupId(id);
+    }
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Course> addCourse(@RequestBody @Valid Course course, BindingResult bindingResult,
+                                          UriComponentsBuilder ucBuilder) {
+        this.service.saveCourse(course);
+        return new ResponseEntity<Course>(course, HttpStatus.CREATED);
     }
 
 

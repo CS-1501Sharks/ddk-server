@@ -31,4 +31,8 @@ public class GeneralService implements IGeneralService {
         return lessonJpaRepo.findAllByRoomId(roomId);
     }
 
+    public void saveCourse(Course course){
+        courseJpaRepo.save(course);
+    }
+
 }
