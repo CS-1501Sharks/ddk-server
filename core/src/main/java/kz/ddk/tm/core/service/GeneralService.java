@@ -1,5 +1,6 @@
 package kz.ddk.tm.core.service;
 import kz.ddk.tm.core.module.Course;
+import kz.ddk.tm.core.module.Discipline;
 import kz.ddk.tm.core.module.Lesson;
 import kz.ddk.tm.core.repository.*;
 
@@ -15,6 +16,8 @@ public class GeneralService implements IGeneralService {
     CourseJpaRepo courseJpaRepo;
     @Autowired
     LessonJpaRepo lessonJpaRepo;
+    @Autowired
+    DisciplineJpaRepo disciplineJpaRepo;
 
     @Override
     public List<Course> getAllCourse() {
@@ -35,4 +38,17 @@ public class GeneralService implements IGeneralService {
         courseJpaRepo.save(course);
     }
 
+    @Override
+    public void saveDiscipline(Discipline discipline) {
+        disciplineJpaRepo.save(discipline);
+    }
+    @Override
+    public void deleteDiscipline(Discipline discipline) {
+        disciplineJpaRepo.delete(discipline);
+    }
+
+    @Override
+    public Discipline getDisciplineById(Integer disciplineId) {
+        return  disciplineJpaRepo.findOne(disciplineId);
+    }
 }
