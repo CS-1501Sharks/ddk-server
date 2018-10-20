@@ -23,6 +23,7 @@ public class GeneralController {
     @Autowired
     IGeneralService service;
 
+    /*GET Methods*/
     @GetMapping("/course")
     List<Course> getAllCourse(){
         return  service.getAllCourse();
@@ -35,31 +36,35 @@ public class GeneralController {
     List<Lesson> getAllByGroupId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByGroupId(id);
     }
+    @GetMapping("/lesson/bycourse/{id}")
+    List<Lesson> getAllByCourseId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByCourseId(id);
+    }
+    @GetMapping("/lesson/bytype/{id}")
+    List<Lesson> getAllByTypeId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByTypeId(id);
+    }
+
+
+
+
+    /*POST Methods*/
 //    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //    public ResponseEntity<Course> addCourse(@RequestBody @Valid Course course, BindingResult bindingResult,
 //                                          UriComponentsBuilder ucBuilder) {
 //        this.service.saveCourse(course);
 //        return new ResponseEntity<Course>(course, HttpStatus.CREATED);
 //    }
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/discipline", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Discipline> saveDiscipline(@RequestBody @Valid Discipline discipline, BindingResult bindingResult,
                                                 UriComponentsBuilder ucBuilder) {
         this.service.saveDiscipline(discipline);
         return new ResponseEntity<Discipline>(discipline, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{disciplineId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @Transactional
-    public ResponseEntity<Void> deleteDiscipline(@PathVariable("disciplineId") int disciplineId) {
-        Discipline discipline = this.service.getDisciplineById(disciplineId);
-        if (discipline == null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        }
-        this.service.deleteDiscipline(discipline);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-    }
 
 
+    /*PUT Methods*/
     @RequestMapping(value = "/{disciplineId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Discipline> updateDiscipline(@PathVariable("disciplineId") int disciplineId, @RequestBody @Valid Discipline discipline,
                                                        BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
@@ -78,6 +83,16 @@ public class GeneralController {
         return new ResponseEntity<Discipline>(currentDiscipline, HttpStatus.NO_CONTENT);
     }
 
-
+    /*DELETE Methods*/
+    @RequestMapping(value = "/{disciplineId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @Transactional
+    public ResponseEntity<Void> deleteDiscipline(@PathVariable("disciplineId") int disciplineId) {
+        Discipline discipline = this.service.getDisciplineById(disciplineId);
+        if (discipline == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        this.service.deleteDiscipline(discipline);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
 }
 

@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface IGeneralService {
     List<Course> getAllCourse();
-    Discipline getDisciplineById(Integer disciplineId);
     List<Lesson> getLessonsByGroupId(Integer groupId);
     List<Lesson> getLessonsByRoomId(Integer roomId);
+    List<Lesson> getLessonsByCourseId(Integer courseId);
+    List<Lesson> getLessonsByTypeId(Integer TypeId);
+    Discipline getDisciplineById(Integer disciplineId);
 
     public void saveCourse(Course course);
     public void saveDiscipline(Discipline discipline) ;

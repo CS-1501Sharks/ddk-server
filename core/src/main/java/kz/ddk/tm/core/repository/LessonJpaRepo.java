@@ -9,4 +9,6 @@ public interface LessonJpaRepo extends JpaRepository<Lesson, Integer> {
 
     List<Lesson> findAllByGroupId(Integer groupId);
     List<Lesson> findAllByRoomId(Integer roomId);
+    List<Lesson> findAllByCourseId(Integer courseId);
+    List<Lesson> findAllByTypeId(Integer typeId);
 }
