@@ -1,7 +1,5 @@
 package kz.ddk.tm.core.service;
-import kz.ddk.tm.core.module.Course;
-import kz.ddk.tm.core.module.Discipline;
-import kz.ddk.tm.core.module.Lesson;
+import kz.ddk.tm.core.module.*;
 import kz.ddk.tm.core.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +69,43 @@ public class GeneralService implements IGeneralService {
     public List<Discipline> getDisciplineByDisciplineTypeID(Integer disciplineTypeId) {
         return disciplineJpaRepo.findAllByDisciplineTypeId(disciplineTypeId);
     }
+
+    @Override
+    public List<DisciplineType> getDisciplineTypeByName(String name) {
+        return disciplineTypeJpaRepo.findAllByName(name);
+    }
+
+    @Override
+    public List<Group> getGroupByName(String name) {
+        return groupJpaRepo.findAllByName(name);
+    }
+
+    @Override
+    public List<Group> getGroupByClassroomNum(Integer classroomNum) {
+        return groupJpaRepo.findAllByClassroomNum(classroomNum);
+    }
+
+    @Override
+    public List<LessonType> getLessonTypeByName(String name) {
+        return lessonTypeJpaRepo.findAllByName(name);
+    }
+
+    @Override
+    public List<Room> getRoomByName(String name) {
+        return roomJpaRepo.findAllByName(name);
+    }
+
+    @Override
+    public List<Room> getRoomByFloor(Integer floor) {
+        return roomJpaRepo.findAllByFloor(floor);
+    }
+
+    @Override
+    public List<Room> getRoomByNumber(Integer number) {
+        return roomJpaRepo.findAllByNumber(number);
+    }
+
+
 
     @Override
     public List<Lesson> getLessonsByGroupId(Integer groupId) {

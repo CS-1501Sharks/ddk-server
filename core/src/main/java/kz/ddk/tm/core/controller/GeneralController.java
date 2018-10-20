@@ -1,8 +1,5 @@
 package kz.ddk.tm.core.controller;
-
-import kz.ddk.tm.core.module.Course;
-import kz.ddk.tm.core.module.Discipline;
-import kz.ddk.tm.core.module.Lesson;
+import kz.ddk.tm.core.module.*;
 import kz.ddk.tm.core.service.IGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,58 +20,96 @@ public class GeneralController {
     @Autowired
     IGeneralService service;
 
-    /*GET Methods*/
+    /*GET METHODS*/
+    //Course
     @GetMapping("/course")
     List<Course> getAllCourse(){
         return  service.getAllCourse();
     }
-
-
-    @GetMapping("/course/byteacher/{id}")
+    @GetMapping("/course/byTeacher/{id}")
     List<Course> getAllByTeacherId(@PathVariable(value = "id") Integer id){
         return service.getCourseByTeacherId(id);
     }
-    @GetMapping("/course/bydiscipline/{id}")
+    @GetMapping("/course/byDiscipline/{id}")
     List<Course> getAllByDisciplineId(@PathVariable(value = "id") Integer id){
         return service.getCourseByDisciplineId(id);
     }
-    @GetMapping("/course/bygroup/{id}")
+    @GetMapping("/course/byGroup/{id}")
     List<Course> getAllByGroupID(@PathVariable(value = "id") Integer id){
         return service.getCourseByGroupId(id);
     }
-    @GetMapping("/course/bygroupLead/{id}")
+    @GetMapping("/course/byGroupLead/{id}")
     List<Course> getAllByGroupLeadId(@PathVariable(value = "id") Integer id){
         return service.getCourseByGroupLeadId(id);
     }
 
-
-    @GetMapping("/discipline/byname")
+    //Discipline
+    @GetMapping("/discipline/byName")
     List<Discipline> getAllByName(@PathVariable(value = "name") String name){
         return service.getDisciplineByName(name);
     }
-    @GetMapping("/course/bydisciplineType/{id}")
+    @GetMapping("/discipline/byDisciplineType/{id}")
     List<Discipline> getAllByDisciplineTypeId(@PathVariable(value = "id") Integer id){
         return service.getDisciplineByDisciplineTypeID(id);
     }
 
+    //DisciplineType
+    @GetMapping("/disciplineType/byName")
+    List<DisciplineType> getAllByNamE(@PathVariable(value = "name") String name){
+        return service.getDisciplineTypeByName(name);
+    }
+
+    //Group
+    @GetMapping("/group/byName")
+    List<Group> getAllByNaMe(@PathVariable(value = "name") String name){
+        return service.getGroupByName(name);
+    }
+    @GetMapping("/group/byClassroomNum")
+    List<Group> getAllByClassroomNum(@PathVariable(value = "classroomNum") Integer classroomNum){
+        return service.getGroupByClassroomNum(classroomNum);
+    }
+
+    //LessonType
+    @GetMapping("/lessonType/byName")
+    List<LessonType> getAllByNAme(@PathVariable(value = "name") String name){
+        return service.getLessonTypeByName(name);
+    }
+
+    //Room
+    @GetMapping("/room/byName")
+    List<Room> getAllByNaME(@PathVariable(value = "name") String name){
+        return service.getRoomByName(name);
+    }
+    @GetMapping("/room/byFloor")
+    List<Room> getAllByFloor(@PathVariable(value = "floor") Integer floor){
+        return service.getRoomByFloor(floor);
+    }
+    @GetMapping("/room/byNumber")
+    List<Room> getAllByNumber(@PathVariable(value = "number") Integer number){
+        return service.getRoomByNumber(number);
+    }
 
 
 
 
 
-    @GetMapping("/lesson/byroom/{id}")
+
+
+
+    //Lesson
+    @GetMapping("/lesson/byRoom/{id}")
     List<Lesson> getAllByRoomId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByRoomId(id);
     }
-    @GetMapping("/lesson/bygroup/{id}")
+    @GetMapping("/lesson/byGroup/{id}")
     List<Lesson> getAllByGroupId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByGroupId(id);
     }
-    @GetMapping("/lesson/bycourse/{id}")
+    @GetMapping("/lesson/byCourse/{id}")
     List<Lesson> getAllByCourseId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByCourseId(id);
     }
-    @GetMapping("/lesson/bytype/{id}")
+    @GetMapping("/lesson/byType/{id}")
     List<Lesson> getAllByTypeId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByTypeId(id);
     }
