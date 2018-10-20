@@ -28,14 +28,14 @@ public class ApplicationSwaggerConfig {
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "REST Zoo Medcenter backend Api Documentation",
-                "This is REST API documentation of the Spring Zoo Medcenter backend. If authentication is enabled, when calling the APIs use admin/admin",
+                "REST DDK backend Api Documentation",
+                "This is REST API documentation of the Spring DDK backend. If authentication is enabled, when calling the APIs use admin/admin",
                 "1.0",
-                "Medcenter backend terms of service",
+                "DDK backend terms of service",
                 new Contact(
-                        "Nurgali Yesmukhamedov",
-                        "https://github.com/codacademy/zoo-medcenter-rest",
-                        "nurgali.yesmukhamedov@gmail.com"),
+                        "Assel Zholdassova, Yerbol Nurdauletov, Alisher Mukhametkali",
+                        "https://github.com/CS-1501Sharks/ddk-server",
+                        "ddk@gmail.com"),
                 "",
                 "");
     }

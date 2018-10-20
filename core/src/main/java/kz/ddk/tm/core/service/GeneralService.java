@@ -43,6 +43,36 @@ public class GeneralService implements IGeneralService {
     }
 
     @Override
+    public List<Course> getCourseByTeacherId(Integer teacherId) {
+        return courseJpaRepo.findAllByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<Course> getCourseByDisciplineId(Integer disciplineId) {
+        return courseJpaRepo.findAllByDisciplineId(disciplineId);
+    }
+
+    @Override
+    public List<Course> getCourseByGroupId(Integer groupId) {
+        return courseJpaRepo.findAllByGroupId(groupId);
+    }
+
+    @Override
+    public List<Course> getCourseByGroupLeadId(Integer groupLeadId) {
+        return courseJpaRepo.findAllByGroupLeadId(groupLeadId);
+    }
+
+    @Override
+    public List<Discipline> getDisciplineByName(String name) {
+        return disciplineJpaRepo.findAllByName(name);
+    }
+
+    @Override
+    public List<Discipline> getDisciplineByDisciplineTypeID(Integer disciplineTypeId) {
+        return disciplineJpaRepo.findAllByDisciplineTypeId(disciplineTypeId);
+    }
+
+    @Override
     public List<Lesson> getLessonsByGroupId(Integer groupId) {
         return lessonJpaRepo.findAllByGroupId(groupId);
     }

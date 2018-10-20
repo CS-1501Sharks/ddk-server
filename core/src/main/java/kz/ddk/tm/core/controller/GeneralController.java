@@ -28,6 +28,40 @@ public class GeneralController {
     List<Course> getAllCourse(){
         return  service.getAllCourse();
     }
+
+
+    @GetMapping("/course/byteacher/{id}")
+    List<Course> getAllByTeacherId(@PathVariable(value = "id") Integer id){
+        return service.getCourseByTeacherId(id);
+    }
+    @GetMapping("/course/bydiscipline/{id}")
+    List<Course> getAllByDisciplineId(@PathVariable(value = "id") Integer id){
+        return service.getCourseByDisciplineId(id);
+    }
+    @GetMapping("/course/bygroup/{id}")
+    List<Course> getAllByGroupID(@PathVariable(value = "id") Integer id){
+        return service.getCourseByGroupId(id);
+    }
+    @GetMapping("/course/bygroupLead/{id}")
+    List<Course> getAllByGroupLeadId(@PathVariable(value = "id") Integer id){
+        return service.getCourseByGroupLeadId(id);
+    }
+
+
+    @GetMapping("/discipline/byname")
+    List<Discipline> getAllByName(@PathVariable(value = "name") String name){
+        return service.getDisciplineByName(name);
+    }
+    @GetMapping("/course/bydisciplineType/{id}")
+    List<Discipline> getAllByDisciplineTypeId(@PathVariable(value = "id") Integer id){
+        return service.getDisciplineByDisciplineTypeID(id);
+    }
+
+
+
+
+
+
     @GetMapping("/lesson/byroom/{id}")
     List<Lesson> getAllByRoomId(@PathVariable(value = "id") Integer id){
         return service.getLessonsByRoomId(id);
