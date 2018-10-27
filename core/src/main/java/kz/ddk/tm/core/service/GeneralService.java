@@ -35,6 +35,7 @@ public class GeneralService implements IGeneralService {
 
 
     /*GET Methods*/
+    //Course
     @Override
     public List<Course> getAllCourse() {
         return courseJpaRepo.findAll();
@@ -60,6 +61,8 @@ public class GeneralService implements IGeneralService {
         return courseJpaRepo.findAllByGroupLeadId(groupLeadId);
     }
 
+
+    //Discipline
     @Override
     public List<Discipline> getDisciplineByName(String name) {
         return disciplineJpaRepo.findAllByName(name);
@@ -70,11 +73,15 @@ public class GeneralService implements IGeneralService {
         return disciplineJpaRepo.findAllByDisciplineTypeId(disciplineTypeId);
     }
 
+
+    //DisciplineType
     @Override
     public List<DisciplineType> getDisciplineTypeByName(String name) {
         return disciplineTypeJpaRepo.findAllByName(name);
     }
 
+
+    //Group
     @Override
     public List<Group> getGroupByName(String name) {
         return groupJpaRepo.findAllByName(name);
@@ -85,11 +92,37 @@ public class GeneralService implements IGeneralService {
         return groupJpaRepo.findAllByClassroomNum(classroomNum);
     }
 
+
+    //Lesson
+    @Override
+    public List<Lesson> getLessonsByGroupId(Integer groupId) {
+        return lessonJpaRepo.findAllByGroupId(groupId);
+    }
+
+    @Override
+    public List<Lesson> getLessonsByRoomId(Integer roomId) {
+        return lessonJpaRepo.findAllByRoomId(roomId);
+    }
+
+    @Override
+    public List<Lesson> getLessonsByCourseId(Integer courseId) {
+        return lessonJpaRepo.findAllByCourseId(courseId);
+    }
+
+    @Override
+    public List<Lesson> getLessonsByTypeId(Integer typeId) {
+        return lessonJpaRepo.findAllByTypeId(typeId);
+    }
+
+
+    //LessonType
     @Override
     public List<LessonType> getLessonTypeByName(String name) {
         return lessonTypeJpaRepo.findAllByName(name);
     }
 
+
+    //Room
     @Override
     public List<Room> getRoomByName(String name) {
         return roomJpaRepo.findAllByName(name);
@@ -105,27 +138,7 @@ public class GeneralService implements IGeneralService {
         return roomJpaRepo.findAllByNumber(number);
     }
 
-
-
-    @Override
-    public List<Lesson> getLessonsByGroupId(Integer groupId) {
-        return lessonJpaRepo.findAllByGroupId(groupId);
-    }
-
-    @Override
-    public List<Lesson> getLessonsByRoomId(Integer roomId) {
-        return lessonJpaRepo.findAllByRoomId(roomId);
-    }
-
-    @Override
-    public List<Lesson> getLessonsByCourseId(Integer courseId) {
-        return lessonJpaRepo.findAllByCourseId(courseId);
-    }
-    @Override
-    public List<Lesson> getLessonsByTypeId(Integer typeId) {
-        return lessonJpaRepo.findAllByTypeId(typeId);
-    }
-
+    
     //Check this?
     @Override
     public Discipline getDisciplineById(Integer disciplineId) {

@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/general")
 public class GeneralController {
+
     @Autowired
     IGeneralService service;
 
@@ -69,6 +70,24 @@ public class GeneralController {
         return service.getGroupByClassroomNum(classroomNum);
     }
 
+    //Lesson
+    @GetMapping("/lesson/byRoom/{id}")
+    List<Lesson> getAllByRoomId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByRoomId(id);
+    }
+    @GetMapping("/lesson/byGroup/{id}")
+    List<Lesson> getAllByGroupId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByGroupId(id);
+    }
+    @GetMapping("/lesson/byCourse/{id}")
+    List<Lesson> getAllByCourseId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByCourseId(id);
+    }
+    @GetMapping("/lesson/byType/{id}")
+    List<Lesson> getAllByTypeId(@PathVariable(value = "id") Integer id){
+        return service.getLessonsByTypeId(id);
+    }
+
     //LessonType
     @GetMapping("/lessonType/byName")
     List<LessonType> getAllByNAme(@PathVariable(value = "name") String name){
@@ -96,23 +115,7 @@ public class GeneralController {
 
 
 
-    //Lesson
-    @GetMapping("/lesson/byRoom/{id}")
-    List<Lesson> getAllByRoomId(@PathVariable(value = "id") Integer id){
-        return service.getLessonsByRoomId(id);
-    }
-    @GetMapping("/lesson/byGroup/{id}")
-    List<Lesson> getAllByGroupId(@PathVariable(value = "id") Integer id){
-        return service.getLessonsByGroupId(id);
-    }
-    @GetMapping("/lesson/byCourse/{id}")
-    List<Lesson> getAllByCourseId(@PathVariable(value = "id") Integer id){
-        return service.getLessonsByCourseId(id);
-    }
-    @GetMapping("/lesson/byType/{id}")
-    List<Lesson> getAllByTypeId(@PathVariable(value = "id") Integer id){
-        return service.getLessonsByTypeId(id);
-    }
+
 
 
 
@@ -130,6 +133,8 @@ public class GeneralController {
         this.service.saveDiscipline(discipline);
         return new ResponseEntity<Discipline>(discipline, HttpStatus.CREATED);
     }
+
+
 
 
 
@@ -151,6 +156,9 @@ public class GeneralController {
         this.service.saveDiscipline(currentDiscipline);
         return new ResponseEntity<Discipline>(currentDiscipline, HttpStatus.NO_CONTENT);
     }
+
+
+
 
     /*DELETE Methods*/
     @RequestMapping(value = "/{disciplineId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

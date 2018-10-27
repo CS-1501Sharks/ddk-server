@@ -1,5 +1,6 @@
 package kz.ddk.tm.api.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -14,6 +15,12 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -27,6 +34,8 @@ import java.util.stream.Collectors;
 
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableTransactionManagement
 @EnableAutoConfiguration
 @EnableJpaRepositories(
@@ -36,7 +45,7 @@ import java.util.stream.Collectors;
                 "kz.ddk.tm.core.repository"
         }
 )
-public class CoreConfig {
+public class CoreConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Primary
     @ConfigurationProperties(prefix = "spring.core.datasource")
@@ -84,6 +93,36 @@ public class CoreConfig {
         } catch (IOException e) {
             return new HashMap<String, Object>();
         }
+    }
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/securityNone").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic().and()
+                .csrf().disable();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select username,password,enabled from user where username=?")
+                .authoritiesByUsernameQuery("SELECT u.username, r.role from roles r " +
+                        "LEFT JOIN `USER` u ON u.id = r.user_id " +
+                        "WHERE u.username=?");
+    }
+
+    @SuppressWarnings("deprecation")
+    @Bean
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
 }
