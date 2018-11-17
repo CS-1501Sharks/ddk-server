@@ -1,4 +1,5 @@
 package kz.ddk.tm.core.controller;
+
 import kz.ddk.tm.core.module.*;
 import kz.ddk.tm.core.service.IGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,12 +7,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -31,8 +37,26 @@ public class GeneralController {
     List<Course> getAllByTeacherId(@PathVariable(value = "id") Integer id){
         return service.getCourseByTeacherId(id);
     }
+
+
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     @GetMapping("/course/byDiscipline/{id}")
     List<Course> getAllByDisciplineId(@PathVariable(value = "id") Integer id){
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().
+                getAuthentication().getPrincipal();
+        System.out.println(userDetails.getPassword());
+        System.out.println(userDetails.getUsername());
+        System.out.println(userDetails.isEnabled());
+
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        boolean hasRole = false;
+        for (GrantedAuthority authority : authorities) {
+            System.out.println(authority.getAuthority());
+
+        }
+
         return service.getCourseByDisciplineId(id);
     }
     @GetMapping("/course/byGroup/{id}")
@@ -121,12 +145,7 @@ public class GeneralController {
 
 
     /*POST Methods*/
-//    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public ResponseEntity<Course> addCourse(@RequestBody @Valid Course course, BindingResult bindingResult,
-//                                          UriComponentsBuilder ucBuilder) {
-//        this.service.saveCourse(course);
-//        return new ResponseEntity<Course>(course, HttpStatus.CREATED);
-//    }
+    //@PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/discipline", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Discipline> saveDiscipline(@RequestBody @Valid Discipline discipline, BindingResult bindingResult,
                                                 UriComponentsBuilder ucBuilder) {
@@ -139,6 +158,7 @@ public class GeneralController {
 
 
     /*PUT Methods*/
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{disciplineId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Discipline> updateDiscipline(@PathVariable("disciplineId") int disciplineId, @RequestBody @Valid Discipline discipline,
                                                        BindingResult bindingResult, UriComponentsBuilder ucBuilder) {

@@ -101,7 +101,7 @@ public class CoreConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/securityNone").permitAll()
+                .antMatchers("/securityNode").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().and()
@@ -114,7 +114,7 @@ public class CoreConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username,password,enabled from user where username=?")
-                .authoritiesByUsernameQuery("SELECT u.username, r.role from roles r " +
+                .authoritiesByUsernameQuery("SELECT u.username username, r.role role from `ROLES` r " +
                         "LEFT JOIN `USER` u ON u.id = r.user_id " +
                         "WHERE u.username=?");
     }
